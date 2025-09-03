@@ -1,0 +1,20 @@
+title: Web3 Staking
+description: Сайт о Web3 Staking проектах
+baseurl: "/web3-staking" # название репозитория
+url: "https://username.github.io" # твой GitHub Pages URL
+theme: minima # можно любой другой
+markdown: kramdown
+
+# Настройки для ссылок
+permalink: /:title/
+
+# Плагины (если есть)
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Исключить файлы из сборки
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
