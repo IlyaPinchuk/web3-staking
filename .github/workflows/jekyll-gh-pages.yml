@@ -1,0 +1,47 @@
+name: Deploy Jekyll Site to GitHub Pages
+
+on:
+  push:
+    branches: ["main"] # измените, если у вас другая ветка
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1️⃣ Клонируем репозиторий
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Устанавливаем Ruby и Bundler
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2" # или версия, которую использует твой Jekyll
+          bundler-cache: true
+
+      # 3️⃣ Устанавливаем зависимости Jekyll
+      - name: Install dependencies
+        run: |
+          bundle install
+
+      # 4️⃣ Собираем сайт
+      - name: Build Jekyll site
+        run: |
+          bundle exec jekyll build --destination ./_site
+
+      # 5️⃣ Загружаем артефакт
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./_site
+
+      # 6️⃣ Деплой на GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
